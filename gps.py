@@ -8,7 +8,7 @@ from sanji.core import Route
 from sanji.connection.mqtt import Mqtt
 from sanji.model_initiator import ModelInitiator
 from voluptuous import Schema
-from voluptuous import Extra
+from voluptuous import Any, Extra
 
 
 # TODO: logger should be defined in sanji package?
@@ -64,8 +64,8 @@ class Gps(Sanji):
         return response(data=self.model.db)
 
     put_schema = Schema({
-        "lat": float,
-        "lon": float,
+        "lat": Any(int, float),
+        "lon": Any(int, float),
         Extra: object
     }, required=True)
 
@@ -76,15 +76,13 @@ class Gps(Sanji):
             return response(code=400,
                             data={"message": "Invalid input."})
 
+        # TODO: should be removed when schema worked for unittest
         try:
             Gps.put_schema(message.data)
         except Exception as e:
             return response(code=400,
                             data={"message": "Invalid input: %s." % e})
 
-        print self.model.db
-        print self.model.db["lat"]
-        print message.data
         self.model.db["lat"] = message.data["lat"]
         self.model.db["lon"] = message.data["lon"]
         self.save()
