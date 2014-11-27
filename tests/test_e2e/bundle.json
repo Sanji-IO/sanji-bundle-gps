@@ -1,0 +1,21 @@
+{
+  "name": "view-gps",
+  "version": "1.0",
+  "author": "Aeluin Chen",
+  "email": "aeluin.chen@moxa.com",
+  "description": "A test view for gps bundle",
+  "license": "MOXA",
+  "main": "view_gps.py",
+  "argument": "",
+  "priority": 20,
+  "hook": [],
+  "dependencies": {},
+  "repository": "",
+  "role": "view",
+  "ttl": 10,
+  "resources": [
+    {
+      "resource": "/system/gps"
+    }
+  ]
+}
